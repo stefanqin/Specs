@@ -3,45 +3,64 @@ from globs import *
 import sys
 
 #read console params and update vars
+#add constant var for arg[2]
+#arg[3] is choosing console or excel output
+#arg[4] is choosing info shown
+#optional params
+#make another console file
 def read_console():
-    #first arg
+
+    indep_var = False;
+
+    global output_type_flag
     global info_flag
-    for i in sys.argv:
-        if i[0] == "-" && len(i) == 2: #check if correct usage
-            if i[1] == "d": #iv = diameter
-                iv = (diameter*0.1 for diameter in range(6,11));
-                ind_var_flag = "d"
-            elif i[1] == "b":#iv = build_height_angle
-                iv = (build_height_angle*0.1 for build_height_angle in range(6,11));
-                ind_var_flag = "b"
+    global iv
+    global ind_var_flag
+
+    #first arg
+    for i in sys.argv[1:]:
+        if i[0] == "-" and len(i) == 2:
+            #HELP_STATEMENT
+            if i[1] == "h":
+                print(HELP_STATEMENT)
+                exit(1)
+
+            #Variable
+            #check independent and const vars
+            if indep_var == False:
+                #Variable
+                if i[1] == "d": #iv = diameter
+                    iv = (diameter*0.1 for diameter in range(6,11));
+                    ind_var_flag = "d"
+                    indep_var == True;
+                elif i[1] == "b":#iv = build_height_angle
+                    iv = (build_height_angle*0.1 for build_height_angle in range(6,11));
+                    ind_var_flag = "b"
+                    indep_var == True;
             else:
-                print(USAGE_STATEMENT)
-                exit(1) #Usage error
-                '''
-            else:#default: iv = diameter if anything else entered
-                iv = (diameter*0.1 for diameter in range(6,11));
-                ind_var_flag = "d"
-                '''
-        else:
-            print(USAGE_STATEMENT)
-            exit(1) #Usage error
-    #second arg
-    #more than one flag can be active
-    try:
-        if(sys.argv[2] is None):
-            raise IndexError;
-        for i in sys.argv[2:]:
-            if i == "s": #simple
+                #code for const var here
+                True;
+
+            #output switch
+            if i[1] == "c":#console
+                output_type_flag = "c"
+            elif i[1] == "e": #spreadsheet
+                output_type_flag = "e"
+
+            #show info
+            if i[1] == "s": #simple
                 info_flag[0] = 1;
-            elif i == "v": #virtual
+            elif i[1] == "v": #virtual
                 info_flag[1] = 1;
-            elif i == "o":#show offsets
+            elif i[1] == "o":#show offsets
                 info_flag[2] = 1;
-            elif i != "s" and i != "v" and i != "0": #default: [0,1,0]
+            #dealing with nonsensical arg
+            elif i[1] not in ["h","d","b","c","e","s","v","o"]:
                 print("Argument",i,"ignored.");
-    except IndexError: #default: [0,1,0]
-        info_flag = [0,0,0];
-    return iv, ind_var_flag,info_flag;
+        else:
+            print("Argument",i,"ignored.");
+        #return iv, ind_var_flag,info_flag,output_type_flag;
+    return iv, ind_var_flag,info_flag,output_type_flag
 
 #console output
 class console_out:
