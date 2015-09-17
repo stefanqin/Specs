@@ -2,18 +2,23 @@ from math import *
 
 #indepen var:
 class v:
-
-    def __init__(self,name):
-        self.name = name;
-
     diameter = 0;
 
     #offsets
     #use ROSTOCK MAX offsets for now
     #in m
+
+    #CONFIGURABLES:
     carr_offset = 18/1000;
     eff_offset = 33/1000;
     tot_offset = carr_offset + eff_offset;
+
+    #initial elevation is the angle between build plate and arm at the center.
+    init_elev_degrees = 51.5;
+
+    #Other constants
+    ceiling_height = 2; #doesn't account for very top of frame, which would be about 15cm
+    base_height = 0.3;
 
     #VARIABLES
     area = 0;
@@ -34,13 +39,7 @@ class v:
     area_offset = 0;
     base_frame_length_offset = 0;
 
-    #CONSTANTS
-    ceiling_height = 2; #doesn't account for very top of frame, which would be about 15cm
-    base_height = 0.3;
-
-    #initial elevation is the angle between build plate and arm at the center.
-
-    init_elev_degrees = 51.5;
+    #angle mathematics based on init_elev
     init_elev = radians(init_elev_degrees);
     min_angle = asin(cos(init_elev)/2);
     max_angle = asin(3*sin(min_angle));#radians(max_angle_degrees);
@@ -49,8 +48,6 @@ class v:
     #sin(max_angle) = 3*sin(min_angle)
     #max_angle_degrees = 77;
     #changing min_angle
-
-
 
     #changing max_angle
     '''
@@ -63,7 +60,7 @@ class v:
     #HEADINGS
     #CHANGE these
 
-#when using console
+    #when using console
     DIAMETER = "D    "
     AREA = "A    "
     BASE_FRAME_LENGTH = "BFL  "

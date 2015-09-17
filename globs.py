@@ -4,26 +4,29 @@ global USAGE_STATEMENT;
 #TITLES
 global title_dict;
 global written_vals;
-global iv; #independent var chosen -> generator obj
+global iv; #independent var chosen -> generator obj HOW DO YOU INITIALISE THIS??
 global ind_var_flag; #console switch (one at a time)
-#Info_flag controls what's shown, not what's calculated
-#info_flag uses flags since more than one can be active
-#flags are: [0,0,0] = [simple, virtual, offset]
 global info_flag; #output flag (independent flags)
 global output_type_flag;
-
 global titles;
 global variables
 
+#atm this is not used for anything
 USAGE_STATEMENT = "USAGE: python3 calculator.py [Options].\nType python3 calculator.py -h for more info."
 
+#INITIALISING VARS
 title_dict = {};
 written_vals = {};
 ind_var_flag = "d"
 #initialise generator IV here -> dunno how to yet
-info_flag = [0,0,0]#default
+
+#Info_flag controls what's shown, not what's calculated
+#info_flag uses flags since more than one can be active
+#flags are: [0,0,0] = [simple, virtual, offset]
+info_flag = [0,0,0] #default
+
 output_type_flag = "c"; #c for console, e for excel
-iv = range(6,11)
+iv = (diameter*0.1 for diameter in range(6,11))
 
 titles = [
     v.DIAMETER, v.AREA, v.BASE_FRAME_LENGTH,
@@ -47,34 +50,36 @@ variables = [
     v.diameter_offset,v.area_offset,v.base_frame_length_offset]
 
 HELP_STATEMENT = '''
-    -ind_var const_var: #choose independent variable, followed by const_var
-    default: -d e
+-ind_var const_var: #choose independent variable. const var: elevation_angle
+default: -d
 
-    variables:
-    d = diameter
-    b = base_height_angle
-    a = elevation_angle
-    l = arm_lengthss
+variables:
+d = diameter
+b = base_height_angle
+l = arm_lengthss
 
-    -output_type: #console or spreadsheet output
-    default: -c
+-output_type: #console or spreadsheet output
+default: -c
 
-    variables:
-    c = console
-    e = spreadsheet
-    p = output to both
+variables:
+c = console
+e = excel
+p = output to both
 
-    -info_shown... : #variable number of args. Choose variables to show
-    default: only diameter, area and base_frame_length shown.
+-info_shown... : #variable number of args. Choose variables to show
+default: only diameter, area and base_frame_length shown.
 
-    Show extra variables:
-    s = simple (arm rotation 90 degrees)
-    v = virtual (emulate virtual delta machine)
-    o = offset (design specs w/ offset included)
+Show extra variables:
+s = simple (arm rotation 90 degrees)
+v = virtual (emulate virtual delta machine)
+o = offset (design specs w/ offset included)
+A = show all
 
-    -h: #HELP_STATEMENT
-    Show this interface.
+-h: #HELP_STATEMENT
+Show this interface.
 
-    Note: If multiple args of the same type are passed, only the most recent is
-    registered.
-    '''
+Note: If multiple args of the same type are passed, only the most recent is
+registered.
+
+To change defaults, enter the "Headings.py" file.
+'''
