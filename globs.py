@@ -50,13 +50,13 @@ variables = [
     v.diameter_offset,v.area_offset,v.base_frame_length_offset]
 
 HELP_STATEMENT = '''
--ind_var const_var: #choose independent variable. const var: elevation_angle
+-ind_var: #choose independent variable. const var: elevation_angle
 default: -d
 
 variables:
 d = diameter
 b = base_height_angle
-l = arm_lengthss
+l = arm_lengths
 
 -output_type: #console or spreadsheet output
 default: -c
